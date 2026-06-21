@@ -1,0 +1,49 @@
+route: "budget-aware-full-blast"
+topology: "controller_fanout"
+controller: "main_agent"
+cost_decision: "safe | caution | blocked | unavailable"
+max_depth: 1
+max_lanes: 3
+max_new_lanes_per_lane: 0
+completion_oracle: "tests | source-backed answer | browser/live proof | artifact check | owner decision"
+max_iterations: 2
+state_keys:
+  - request
+  - constraints
+  - cost_decision
+  - proof_plan
+lanes:
+  - name: "source_review"
+    permission: "read-only"
+    scope: "named files only"
+allowed_writes: []
+forbidden_actions:
+  - "read secrets"
+  - "print raw account data"
+  - "spawn recursive subagents"
+  - "commit without approval"
+  - "push without approval"
+  - "deploy without approval"
+  - "post publicly without approval"
+approval_required_before:
+  - "external mutation"
+  - "public publishing"
+  - "provider config changes"
+  - "wallet or payment actions"
+stop_if:
+  - "cost_decision == blocked and more than one lane is requested"
+  - "proof oracle cannot be run"
+  - "lane scopes overlap"
+continue_if:
+  - "lane receipts are complete"
+  - "verification passes"
+canaries:
+  - "trivial task routes direct"
+  - "blocked cost limits fanout"
+  - "failed proof blocks done claim"
+lumi:
+  local: ""
+  committed: ""
+  pushed: ""
+  deployed_live: ""
+
