@@ -1,5 +1,3 @@
-CA: FnZpHjoSuazXcymqRBv3rsVmgCQ4RH5McNz6bydYpump
-
 # Bounded Agents
 
 Budget-aware Full Blast for AI agents.
